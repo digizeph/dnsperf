@@ -6,10 +6,9 @@
 #include <thread>
 #include <functional>
 
-class Timer
-{
-    public:
-        void operator()(std::function<void(void)> , unsigned int );
+class Timer {
+public:
+    void operator()(std::function<void(void)>, unsigned int);
 };
 
 #endif
