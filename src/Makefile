@@ -1,5 +1,5 @@
 all:
-	g++ -std=c++11 timer.h timer.cpp dnsperf.cpp -lpthread -o dnsperf
+	g++ -std=c++11 Timer.h Timer.cpp dnsperf.cpp DnsQuery.h DnsQuery.cpp -lldns -lpthread -o dnsperf
 
 run:
 	./dnsperf
