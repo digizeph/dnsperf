@@ -8,7 +8,15 @@ DnsQuery::DnsQuery() {
 
 }
 
-int DnsQuery::queryDomain(char * domainStr) {
+query_stat *DnsQuery::queryDomain(const char domainStr[], bool display) {
+
+    query_stat *stat = (query_stat *) malloc(sizeof(query_stat));
+
+    milliseconds t_start, t_end;
+
+    t_start = duration_cast<milliseconds>(
+            system_clock::now().time_since_epoch()
+    );
 
     ldns_resolver *res;
     ldns_rdf *domain;
@@ -24,7 +32,7 @@ int DnsQuery::queryDomain(char * domainStr) {
     /* create a rdf from the command line arg */
     domain = ldns_dname_new_frm_str(domainStr);
     if (!domain) {
-        return -1;
+        return stat;
     }
 
     /* create a new resolver from /etc/resolv.conf */
@@ -54,23 +62,31 @@ int DnsQuery::queryDomain(char * domainStr) {
         ns = ldns_pkt_rr_list_by_type(p,
                                       LDNS_RR_TYPE_NS,
                                       LDNS_SECTION_ANSWER);
-        if (!ns) {
-            fprintf(stderr,
-                    " *** invalid answer name %s after NS query for %s\n",
-                    domainStr, domainStr);
-            ldns_pkt_free(p);
-            ldns_resolver_deep_free(res);
-            return -1;
-        } else {
-            /* NOTE: printing is optional */
-            ldns_rr_list_sort(ns);
-            ldns_rr_list_print(stdout, ns);
-            ldns_rr_list_deep_free(ns);
+        t_end = duration_cast<milliseconds>(
+                system_clock::now().time_since_epoch()
+        );
+        if (display) {
+            if (!ns) {
+                fprintf(stdout,
+                        " *** invalid answer name %s after NS query for %s\n",
+                        domainStr, domainStr);
+            } else {
+                /* NOTE: printing is optional */
+                ldns_rr_list_sort(ns);
+                ldns_rr_list_print(stdout, ns);
+                ldns_rr_list_deep_free(ns);
+            }
         }
     }
     ldns_pkt_free(p);
     ldns_resolver_deep_free(res);
 
-    return 0;
+    stat->success = true;
+    sprintf(stat->domain, "%s", domainStr);
+    stat->start = t_start;
+    stat->lapse = t_end - t_start;
+
+
+    return stat;
 }
 

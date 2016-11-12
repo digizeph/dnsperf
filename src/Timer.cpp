@@ -8,12 +8,22 @@
  * @param interval the interval time of how frequent the function is called. The unit is milisecond.
  *
  */
-void Timer::operator()(std::function<void(void)> func, unsigned int interval)
+void Timer::operator()(std::function<void(void)> func, int interval, int count = -1)
 {
-    while (true)
-    {
+    if (count > 0) {
+        count--;
         func();
-        std::cout<<"HEY\n";
-        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        while (count > 0) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+            func();
+            count--;
+        }
+    } else if (count == 0) {
+        return;
+    } else {
+        while (true) {
+            func();
+            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        }
     }
 }

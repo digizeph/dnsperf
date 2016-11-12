@@ -8,7 +8,7 @@
 
 class Timer {
 public:
-    void operator()(std::function<void(void)>, unsigned int);
+    void operator()(std::function<void(void)>, int, int);
 };
 
 #endif

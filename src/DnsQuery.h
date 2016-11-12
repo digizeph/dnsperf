@@ -8,8 +8,26 @@
 #include <ldns/ldns.h>
 #include <list>
 #include <string>
+#include <chrono>
+
+using namespace std::chrono;
+
 
 using namespace std;
+
+struct query_stat {
+    bool success = false;   // query status
+    milliseconds start;
+    milliseconds lapse; // finish time - start time
+    char domain[50];
+
+};
+
+/*
+milliseconds ms = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+);
+ */
 
 
 class DnsQuery {
@@ -17,7 +35,8 @@ private:
 
 public:
     DnsQuery();
-    int queryDomain(char[]);
+
+    query_stat *queryDomain(const char[], bool);
 
 };
 
