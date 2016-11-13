@@ -4,6 +4,7 @@
 
 #ifndef DNSPERF_UTILS_H
 #define DNSPERF_UTILS_H
+#include <algorithm>
 #include "DnsPerfDatabase.h"
 #include "DnsQuery.h"
 

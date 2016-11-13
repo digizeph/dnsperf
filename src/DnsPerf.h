@@ -11,7 +11,7 @@ class DnsPerf {
 private:
 
     bool callQuery = false, checkResult = false;
-    int interval = 1000, count = 1;
+    int interval = 2, count = 1;
 
     char * domains[10] = {
             (char *) "google.com",

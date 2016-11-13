@@ -121,9 +121,10 @@ void DnsPerf::start()
 {
     //testTimer();
 
-    if(this->checkResult)
+    if(this->checkResult){
         cout << "********"<<endl<<"DNS performance statistics"<<endl<<"*********"<<endl<<endl;
         this->getStats();
+    }
     if(this->callQuery){
         cout << "********"<<endl<<"DNS Queries Start"<<endl<<"*********"<<endl<<endl;
         thread runThread((*this), this->interval, this->count);
