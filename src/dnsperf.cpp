@@ -39,6 +39,20 @@ std::string random_string(size_t length) {
 }
 
 
+void getStats(char domain[]){
+    DnsPerfDatabase db;
+
+    record_stat * stat = db.getRecordStats(domain);
+
+    cout<<stat->average<<endl
+        <<stat->stddev<<endl
+        <<stat->count<<endl
+        <<stat->first<<endl
+        <<stat->last<<endl;
+
+    free(stat);
+}
+
 void sendQueries(){
     DnsQuery q;
     DnsPerfDatabase db;
@@ -86,10 +100,13 @@ int main(int argc, char *argv[])
     Timer timer;
     //timer.timer_start(&testTimer, 1000);
 
-    thread test(timer, &sendQueries, 1000, 10);
+    //thread test(timer, &sendQueries, 1000, 10);
+    //thread test(timer, &getStats, 1000, 1);
+    //test.join();
+
+    getStats("google.com");
 
 
-    test.join();
     //while(true);
 }
 

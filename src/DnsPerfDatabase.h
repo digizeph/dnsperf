@@ -11,6 +11,14 @@
 using namespace std;
 using namespace mysqlpp;
 
+struct record_stat{
+    float average;
+    float stddev;
+    int count;
+    long long int first;
+    long long int last;
+};
+
 class DnsPerfDatabase {
 
 private:
@@ -18,7 +26,7 @@ private:
 public:
     DnsPerfDatabase();
     ulonglong insertRecord(query_stat*);
-
+    record_stat * getRecordStats(char []);
 };
 
 
