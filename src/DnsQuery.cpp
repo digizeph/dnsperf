@@ -8,7 +8,10 @@ DnsQuery::DnsQuery() {
 
 }
 
-query_stat *DnsQuery::queryDomain(const char domainStr[], bool display) {
+query_stat *DnsQuery::queryDomain(const char prefix[], const char domainStr[], bool display) {
+
+    char queryDomain[50];
+    sprintf(queryDomain, "%s.%s", prefix , domainStr);
 
     query_stat *stat = (query_stat *) malloc(sizeof(query_stat));
 
@@ -30,7 +33,7 @@ query_stat *DnsQuery::queryDomain(const char domainStr[], bool display) {
     res = NULL;
 
     /* create a rdf from the command line arg */
-    domain = ldns_dname_new_frm_str(domainStr);
+    domain = ldns_dname_new_frm_str(queryDomain);
     if (!domain) {
         return stat;
     }
@@ -39,7 +42,8 @@ query_stat *DnsQuery::queryDomain(const char domainStr[], bool display) {
     s = ldns_resolver_new_frm_file(&res, NULL);
 
     if (s != LDNS_STATUS_OK) {
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
+        return stat;
     }
 
     /* use the resolver to send a query for the mx
@@ -54,7 +58,8 @@ query_stat *DnsQuery::queryDomain(const char domainStr[], bool display) {
     ldns_rdf_deep_free(domain);
 
     if (!p)  {
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
+        return stat;
     } else {
         /* retrieve the NS records from the answer section of that
          * packet

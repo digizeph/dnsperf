@@ -8,8 +8,8 @@ using namespace mysqlpp;
 
 DnsPerfDatabase::DnsPerfDatabase() {
     try {
-        conn = new Connection(false);
-        conn->connect("dnsperf", "ht2.mwzhang.com", "dnsperf_user", "P7lw12JMa0sqpWyg");
+
+        conn.connect("dnsperf", "ht2.mwzhang.com", "dnsperf_user", "P7lw12JMa0sqpWyg");
         //Query query = conn->query();
         cout << "Connection succeeded!"<<endl;
     } catch (BadQuery er) { // handle any connection or
@@ -24,4 +24,20 @@ DnsPerfDatabase::DnsPerfDatabase() {
         // Catch-all for any other MySQL++ exceptions
         cerr << "Error: " << er.what() << endl;
     }
+}
+
+/**
+ * Insert single record into the database.
+ *
+ * @param stats query_stat record
+ */
+ulonglong DnsPerfDatabase::insertRecord(query_stat* stat) {
+    Query query = conn.query();
+    query << "INSERT INTO records VALUES (NULL, "
+          <<stat->start.count()<<", "
+          <<stat->lapse.count()<<", '"
+          <<stat->domain<<"');";
+    SimpleResult result = query.execute();
+    //cout<< "record inserted "<<result.insert_id()<<endl;
+    return result.insert_id();
 }

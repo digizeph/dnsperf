@@ -36,7 +36,7 @@ private:
 public:
     DnsQuery();
 
-    query_stat *queryDomain(const char[], bool);
+    query_stat *queryDomain(const char [], const char[], bool);
 
 };
 

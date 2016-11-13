@@ -6,15 +6,18 @@
 #define DNSPERF_DNSPERFDATABASE_H
 
 #include <mysql++.h>
+#include "DnsQuery.h"
+
 using namespace std;
 using namespace mysqlpp;
 
 class DnsPerfDatabase {
 
 private:
-    Connection * conn;
+    Connection conn;
 public:
     DnsPerfDatabase();
+    ulonglong insertRecord(query_stat*);
 
 };
 

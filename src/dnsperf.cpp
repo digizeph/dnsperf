@@ -50,13 +50,17 @@ void sendQueries(){
     for(int i = 0; i < 10; i++){
         char buffer[50];
         sprintf(buffer, "%s.%s", rndStr , domains[i]);
-        stats[i] = q.queryDomain(buffer, false);
+        stats[i] = q.queryDomain(rndStr, domains[i], false);
     }
 
     for (int i = 0; i < 10; i++) {
-        cout << stats[i]->start.count() << "\t";
-        cout << stats[i]->lapse.count() << "\t";
-        cout << stats[i]->domain << "\n";
+        if(stats[i]->success==true){
+            int id = db.insertRecord(stats[i]);
+            cout << id << "\t";
+            cout << stats[i]->start.count() << "\t";
+            cout << stats[i]->lapse.count() << "\t";
+            cout << stats[i]->domain << "\n";
+        }
     }
     cout << endl;
 
@@ -81,7 +85,7 @@ int main(int argc, char *argv[])
     Timer timer;
     //timer.timer_start(&testTimer, 1000);
 
-    thread test(timer, &sendQueries, 1000, 4);
+    thread test(timer, &sendQueries, 1000, 10);
 
 
     test.join();
