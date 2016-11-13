@@ -1,7 +1,7 @@
 #include <list>
 #include "Timer.h"
 #include "DnsQuery.h"
-//#include "DnsPerfDatabase.h"
+#include "DnsPerfDatabase.h"
 
 using namespace std;
 
@@ -20,7 +20,10 @@ const char * domains[] = {
 
 // http://stackoverflow.com/a/12468109/768793
 std::string random_string(size_t length) {
-    srand(time(NULL));
+    struct timeval time;
+    gettimeofday(&time,NULL);
+    srand((time.tv_sec * 1000) + (time.tv_usec / 1000));
+
     auto randchar = []() -> char {
         const char charset[] =
                 "0123456789"
@@ -37,13 +40,16 @@ std::string random_string(size_t length) {
 
 void sendQueries(){
     DnsQuery q;
+    DnsPerfDatabase db;
 
     cout<<"Start sending DNS queries!\n";
 
+
     query_stat **stats = (query_stat **) malloc(10 * sizeof(query_stat *));
+    const char *rndStr = random_string(10).c_str(); // random string appended to the domain
     for(int i = 0; i < 10; i++){
         char buffer[50];
-        sprintf(buffer, "%s.%s", random_string(10).c_str(), domains[i]);
+        sprintf(buffer, "%s.%s", rndStr , domains[i]);
         stats[i] = q.queryDomain(buffer, false);
     }
 

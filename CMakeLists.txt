@@ -15,4 +15,4 @@ add_executable(dnsperf ${MainSources} )
 
 target_link_libraries (dnsperf ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries (dnsperf ldns)
-#target_link_libraries (dnsperf mysql++)
+target_link_libraries (dnsperf mysqlpp)
