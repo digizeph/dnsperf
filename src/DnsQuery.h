@@ -17,8 +17,8 @@ using namespace std;
 
 struct query_stat {
     bool success = false;   // query status
-    milliseconds start;
-    milliseconds lapse; // finish time - start time
+    long long int start;
+    long long int lapse; // finish time - start time
     char domain[50];
 
 };
@@ -36,7 +36,7 @@ private:
 public:
     DnsQuery();
 
-    query_stat *queryDomain(const char [], const char[], bool);
+    query_stat *queryDomain(const char [], char[], bool);
 
 };
 

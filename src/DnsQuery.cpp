@@ -8,7 +8,7 @@ DnsQuery::DnsQuery() {
 
 }
 
-query_stat *DnsQuery::queryDomain(const char prefix[], const char domainStr[], bool display) {
+query_stat *DnsQuery::queryDomain(const char prefix[], char domainStr[], bool display) {
 
     char queryDomain[50];
     sprintf(queryDomain, "%s.%s", prefix , domainStr);
@@ -88,8 +88,8 @@ query_stat *DnsQuery::queryDomain(const char prefix[], const char domainStr[], b
 
     stat->success = true;
     sprintf(stat->domain, "%s", domainStr);
-    stat->start = t_start;
-    stat->lapse = t_end - t_start;
+    stat->start = t_start.count();
+    stat->lapse = t_end.count() - t_start.count();
 
 
     return stat;

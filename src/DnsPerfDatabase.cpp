@@ -34,15 +34,15 @@ DnsPerfDatabase::DnsPerfDatabase() {
 ulonglong DnsPerfDatabase::insertRecord(query_stat* stat) {
     Query query = conn.query();
     query << "INSERT INTO records VALUES (NULL, "
-          <<stat->start.count()<<", "
-          <<stat->lapse.count()<<", '"
+          <<stat->start<<", "
+          <<stat->lapse<<", '"
           <<stat->domain<<"');";
     SimpleResult result = query.execute();
     //cout<< "record inserted "<<result.insert_id()<<endl;
     return result.insert_id();
 }
 
-record_stat *DnsPerfDatabase::getRecordStats(const char domain[]) {
+record_stat *DnsPerfDatabase::getRecordStats(char domain[]) {
     record_stat * stat = new record_stat;
 
     // select stddev(t_lapse),avg(t_lapse) from records where domain='blogger.com'
@@ -55,6 +55,7 @@ record_stat *DnsPerfDatabase::getRecordStats(const char domain[]) {
         for (it = res.begin(); it != res.end(); ++it) {
             mysqlpp::Row row = *it;
 
+            stat->domain = domain;
             stat->average=row[0];
             stat->stddev = row[1];
             stat->count = row[2];
