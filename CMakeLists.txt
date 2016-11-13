@@ -12,7 +12,4 @@ find_package (Threads)
 
 #add_executable(dnsperf dnsperf)
 add_executable(dnsperf ${MainSources} )
-
-target_link_libraries (dnsperf ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries (dnsperf ldns)
-target_link_libraries (dnsperf mysqlpp)
+target_link_libraries (dnsperf ${CMAKE_THREAD_LIBS_INIT} ldns mysqlpp)

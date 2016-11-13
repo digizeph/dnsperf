@@ -11,7 +11,7 @@ DnsPerfDatabase::DnsPerfDatabase() {
 
         conn.connect("dnsperf", "ht2.mwzhang.com", "dnsperf_user", "P7lw12JMa0sqpWyg");
         //Query query = conn->query();
-        cout << "Connection succeeded!"<<endl;
+        cout << "Database connection succeeded!"<<endl<<endl;
     } catch (BadQuery er) { // handle any connection or
         // query errors that may come up
         cerr << "Error: " << er.what() << endl;
@@ -42,7 +42,7 @@ ulonglong DnsPerfDatabase::insertRecord(query_stat* stat) {
     return result.insert_id();
 }
 
-record_stat *DnsPerfDatabase::getRecordStats(char domain[]) {
+record_stat *DnsPerfDatabase::getRecordStats(const char domain[]) {
     record_stat * stat = new record_stat;
 
     // select stddev(t_lapse),avg(t_lapse) from records where domain='blogger.com'
@@ -68,6 +68,7 @@ record_stat *DnsPerfDatabase::getRecordStats(char domain[]) {
 
     query << "select ( select t_start from records where domain='"<< domain <<"' order by id limit 1) as 'first',"
           << "( select t_start from records where domain='"<<domain<<"' order by id desc limit 1) as 'last';";
+
 
     if (StoreQueryResult res = query.store()) {
         mysqlpp::StoreQueryResult::const_iterator it;

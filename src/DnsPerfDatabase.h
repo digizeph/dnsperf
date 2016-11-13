@@ -26,7 +26,7 @@ private:
 public:
     DnsPerfDatabase();
     ulonglong insertRecord(query_stat*);
-    record_stat * getRecordStats(char []);
+    record_stat * getRecordStats(const char []);
 };
 
 
