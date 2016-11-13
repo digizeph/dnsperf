@@ -1,4 +1,5 @@
 #include <list>
+#include <algorithm>
 #include "Timer.h"
 #include "DnsQuery.h"
 #include "DnsPerfDatabase.h"
