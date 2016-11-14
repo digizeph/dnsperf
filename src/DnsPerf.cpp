@@ -1,6 +1,5 @@
 #include <list>
 #include <thread>
-#include <algorithm>
 #include "DnsQuery.h"
 #include "DnsPerfDatabase.h"
 #include "Utils.h"
@@ -12,6 +11,9 @@ using namespace std;
 DnsPerf::DnsPerf(){
 }
 
+/**
+ * Read statistics from the database.
+ */
 void DnsPerf::getStats(){
     record_stat ** stats = (record_stat **) malloc (10 * sizeof(char*));
 
@@ -27,6 +29,9 @@ void DnsPerf::getStats(){
     free(stats);
 }
 
+/**
+ * Send DNS queries and log the results to database.
+ */
 void DnsPerf::sendQueries(){
 
     query_stat **stats = (query_stat **) malloc(10 * sizeof(query_stat *));
@@ -55,6 +60,12 @@ void DnsPerf::sendQueries(){
 
 }
 
+/**
+ * Parse commandline arguments.
+ *
+ * @param argc number of arguments
+ * @param argv list of arguments
+ */
 void DnsPerf::parseArguments(int argc, char * argv[]) {
 
     if(argc<=1){
@@ -97,19 +108,30 @@ void DnsPerf::parseArguments(int argc, char * argv[]) {
     utils = new Utils();
 }
 
+/**
+ * Multi-threading function for periodical DNS queries
+ *
+ * @param interval  interval in seconds
+ * @param count number of rounds to query
+ */
 void DnsPerf::operator()(int interval, int count = -1)
 {
     if (count > 0) {
+        // If count is greater than 0, query count times.
         count--;
         this->sendQueries();
+
+        // sleep interval seconds before run another query.
         while (count > 0) {
             std::this_thread::sleep_for(std::chrono::seconds(interval));
             this->sendQueries();
             count--;
         }
     } else if (count == 0) {
+        // don't do anything if count = 0
         return;
     } else {
+        // if count < 0, run indefinitely
         while (true) {
             this->sendQueries();
             std::this_thread::sleep_for(std::chrono::milliseconds(interval));
@@ -117,15 +139,19 @@ void DnsPerf::operator()(int interval, int count = -1)
     }
 }
 
+/**
+ * Main entry function for DNS query.
+ */
 void DnsPerf::start()
 {
-    //testTimer();
 
     if(this->checkResult){
+        // Run database check first if specified.
         cout << "********"<<endl<<"DNS performance statistics"<<endl<<"*********"<<endl<<endl;
         this->getStats();
     }
     if(this->callQuery){
+        // Run DNS queries if specified.
         cout << "********"<<endl<<"DNS Queries Start"<<endl<<"*********"<<endl<<endl;
         thread runThread((*this), this->interval, this->count);
         runThread.join();
@@ -135,10 +161,6 @@ void DnsPerf::start()
 
 /**
  * The main function for dnsperf.
- *
- * @param argc
- * @param argv
- * @return
  */
 int main(int argc, char *argv[])
 {

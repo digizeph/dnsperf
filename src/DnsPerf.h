@@ -10,9 +10,15 @@ class DnsPerf {
 
 private:
 
+    // whether to check database or call queries
     bool callQuery = false, checkResult = false;
+
+    // default interval and round count
     int interval = 2, count = 1;
 
+    /**
+     * Pre-registered domains.
+     */
     char * domains[10] = {
             (char *) "google.com",
             (char *) "facebook.com",
@@ -27,17 +33,17 @@ private:
     };
 
 
-    Utils *utils;
-    DnsPerfDatabase *db;
-    DnsQuery *q;
+    Utils *utils;           // utilities
+    DnsPerfDatabase *db;    // database tool
+    DnsQuery *q;            // dns query tool
 
 public:
-    DnsPerf();
-    void getStats();
-    void sendQueries();
-    void parseArguments(int, char * []);
-    void start();
-    void operator()(int, int);
+    DnsPerf();  // constructor
+    void getStats();    // get statistics
+    void sendQueries(); // send DNS queries
+    void parseArguments(int, char *[]);    // parse commandline arguments
+    void start();  // main entry function
+    void operator()(int, int);  // timed-run function
 
 };
 

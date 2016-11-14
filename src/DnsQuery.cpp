@@ -8,6 +8,14 @@ DnsQuery::DnsQuery() {
 
 }
 
+/**
+ * Send DNS queries to all 10 domains
+ *
+ * @param prefix        a random prefix for the domain to avoid DNS caching
+ * @param domainStr     string format of the domain name
+ * @param display       whether to output debug info
+ * @return  a query_stat struct object
+ */
 query_stat *DnsQuery::queryDomain(const char prefix[], char domainStr[], bool display) {
 
     char queryDomain[50];
@@ -83,9 +91,11 @@ query_stat *DnsQuery::queryDomain(const char prefix[], char domainStr[], bool di
             }
         }
     }
+    // free memory
     ldns_pkt_free(p);
     ldns_resolver_deep_free(res);
 
+    // fill-in return struct
     stat->success = true;
     sprintf(stat->domain, "%s", domainStr);
     stat->start = t_start.count();

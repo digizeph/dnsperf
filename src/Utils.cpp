@@ -3,9 +3,14 @@
 //
 
 #include "Utils.h"
-#include "DnsPerf.h"
 
 // http://stackoverflow.com/a/12468109/768793
+/**
+ * Create random string for domain query prefix.
+ *
+ * @param length  length of the random string
+ * @return
+ */
 std::string Utils::random_string(size_t length) {
     struct timeval time;
     gettimeofday(&time,NULL);
@@ -24,6 +29,11 @@ std::string Utils::random_string(size_t length) {
     return str;
 }
 
+/**
+ * Print out statistic records from the database for all 10 domains
+ *
+ * @param stats pointer to the 10 statsistics results
+ */
 void Utils::printRecordStats(record_stat ** stats){
 
     cout << std::left
@@ -65,6 +75,11 @@ void Utils::printRecordStats(record_stat ** stats){
     cout << endl;
 }
 
+/**
+ * Print DNS query performance results.
+ *
+ * @param stats pointer to the 10 DNS queries results for the current round.
+ */
 void Utils::printQueryStats(query_stat ** stats) {
     cout << std::left
          << std::setw(15) << "domain"   << "\t"

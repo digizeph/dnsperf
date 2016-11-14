@@ -6,6 +6,11 @@
 using namespace std;
 using namespace mysqlpp;
 
+/**
+ * Database constructor function: connect to dnsperf database.
+ *
+ * @return
+ */
 DnsPerfDatabase::DnsPerfDatabase() {
     try {
 
@@ -42,6 +47,12 @@ ulonglong DnsPerfDatabase::insertRecord(query_stat* stat) {
     return result.insert_id();
 }
 
+/**
+ * Get DNS query entry statistics from the database.
+ *
+ * @param domain domain in question
+ * @return a pointer to the record statistics
+ */
 record_stat *DnsPerfDatabase::getRecordStats(char domain[]) {
     record_stat * stat = new record_stat;
 

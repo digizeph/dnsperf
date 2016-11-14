@@ -15,29 +15,22 @@ using namespace std::chrono;
 
 using namespace std;
 
+/**
+ * Struct to hold DNS query performance information
+ */
 struct query_stat {
     bool success = false;   // query status
-    long long int start;
-    long long int lapse; // finish time - start time
-    char domain[50];
-
+    long long int start;    // timestamp of starting time: UNIX time in millisecond
+    long long int lapse;    // finish time - start time
+    char domain[50];        // domain name
 };
-
-/*
-milliseconds ms = duration_cast< milliseconds >(
-        system_clock::now().time_since_epoch()
-);
- */
 
 
 class DnsQuery {
-private:
 
 public:
-    DnsQuery();
-
-    query_stat *queryDomain(const char [], char[], bool);
-
+    DnsQuery(); // constructor
+    query_stat *queryDomain(const char [], char[], bool);   // query function
 };
 
 

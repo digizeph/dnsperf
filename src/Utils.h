@@ -8,12 +8,15 @@
 #include "DnsPerfDatabase.h"
 #include "DnsQuery.h"
 
+/**
+ * Unitity functions class
+ */
 class Utils {
 
 public:
-    void printRecordStats(record_stat **);
-    void printQueryStats(query_stat **);
-    std::string random_string(size_t);
+    void printRecordStats(record_stat **);  // print statistics results
+    void printQueryStats(query_stat **);    // print raw query performance results
+    std::string random_string(size_t);      // generate random string for domain prefix.
 };
 
 
