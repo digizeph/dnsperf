@@ -84,3 +84,9 @@ This code is highly experimental and have the following limitations:
 * it connects to my personal database and may not be perfectly available;
 * it currently does not support change of query targets;
 * the build procedure can be tricky depending on the platform.
+
+## author
+
+Mingwei Zhang: 
+* https://mwzhang.com
+* mingwei@mwzhang.com
