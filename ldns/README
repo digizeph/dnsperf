@@ -1,5 +1,0 @@
-Installation on Ubuntu:
-    sudo apt install libldns-dev
-
-Compilation:
-    Needs to add -lldns at the end of comand to link the libraries.
