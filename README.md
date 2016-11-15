@@ -28,7 +28,7 @@ Options:
 * timestamp for the last query (in UTC)
 
 
-![dnsperf -r](http://i.imgur.com/3svAz84.png)
+![dnsperf -r](https://i.imgur.com/3svAz84.png)
 
 ### 2. query once
 
@@ -39,7 +39,7 @@ The fields in the database include:
 * timestamp of the query (in UTC)
 * time lapsed for the query (response time) in milliseconds
 
-![dnsperf -q](http://i.imgur.com/3F08Gz9.png)
+![dnsperf -q](https://i.imgur.com/3F08Gz9.png)
 
 ### 3. query multiple times
 
@@ -50,7 +50,7 @@ User can also specify the frequency of queries by using `-i` option to set
 inter-query time intervals in seconds. 
 The following command will query 10 rounds with 5 seconds interval: `./dnsperf -q -c 10 -i 5`
 
-![dnsperf -q -c 3](http://i.imgur.com/jxfjnHu.png)
+![dnsperf -q -c 3](https://i.imgur.com/jxfjnHu.png)
 
 
 
